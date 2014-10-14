@@ -6,22 +6,19 @@ package ru.maizy.fpb
  * See LICENSE.txt for details.
  */
 object Fibonacci {
-  def fib(n: Int): Int = {
+  def fib(n: BigInt): BigInt = {
 
-    // 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144
+    val big0 = BigInt(0)
+    val big1 = BigInt(1)
 
     @annotation.tailrec
-    def nth(i: Int, m2: Int, m1: Int): Int = i match {
-      case `n` => m1 + m2
-      case _ => nth(i + 1, m1, m1 + m2)
+    def nth(i: BigInt, m2: BigInt = big0, m1: BigInt = big1): BigInt = i match {
+      case `big0` => m2
+      case `big1` => m1
+      case _ => nth(i - big1, m1, m1 + m2)
     }
 
-    n match {
-      case 0 => 0
-      case 1 => 1
-      case _ if n < 0 => throw new Exception("not supported")
-      case _ => nth(2, fib(0), fib(1))
-    }
+    nth(n)
   }
 }
 
