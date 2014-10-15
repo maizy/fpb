@@ -18,4 +18,12 @@ class FunctionsUtilsTest extends FunSuite with Matchers {
     val uncurried = uncurry(curried)
     assert(uncurried(5, 2) === a(5, 2))
   }
+
+  test("compose")  {
+    val doubling = (x: String) => x + x
+    val getLength = (x: String) => x.length
+
+    val composed = compose(getLength, doubling)
+    assert(composed("abc") === 6)
+  }
 }
