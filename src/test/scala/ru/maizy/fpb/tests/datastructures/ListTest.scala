@@ -29,4 +29,10 @@ class ListTest extends FunSuite with Matchers {
     assert(ds.List.drop(simpleList, 10) === ds.Nil)
     assert(ds.List.drop(ds.Nil, 2) === ds.Nil)
   }
+
+  test("dropWhile") {
+    assert(ds.List.dropWhile(simpleList, (_: Char) => false) === simpleList)
+    assert(ds.List.dropWhile(simpleList, (x: Char) => x != 'b') === ds.Cons('b', ds.Cons('c', ds.Nil)))
+    assert(ds.List.dropWhile(ds.Nil, (x: Char) => x != 'b') === ds.Nil)
+  }
 }

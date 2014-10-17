@@ -59,7 +59,12 @@ object List {
       drop(tail(l), n - 1)
     }
 
-  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = sys.error("todo")
+  def dropWhile[A](l: List[A], f: A => Boolean): List[A] =
+    l match {
+      case Nil => Nil
+      case Cons(x, xs) if f(x) => dropWhile(xs, f)
+      case Cons(x, xs) => l
+    }
 
   def init[A](l: List[A]): List[A] = sys.error("todo")
 
