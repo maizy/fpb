@@ -80,7 +80,23 @@ object MyList {
     rec(l, MyNil)
   }
 
-  def length[A](l: MyList[A]): Int = sys.error("todo")
+  // --
+
+  def foldRight[A,B](as: MyList[A], z: B)(f: (A, B) => B): B =
+    as match {
+      case MyNil => z
+      case MyCons(x, xs) => f(x, foldRight(xs, z)(f))
+    }
+
+  def sum2(ns: MyList[Int]) =
+    foldRight(ns, 0)((x,y) => x + y)
+
+  def product2(ns: MyList[Double]) =
+    foldRight(ns, 1.0)(_ * _)
+
+
+  def length[A](l: MyList[A]): Int =
+    foldRight(l, 0)((_, acc) => acc + 1)
 
   def foldLeft[A,B](l: MyList[A], z: B)(f: (B, A) => B): B = sys.error("todo")
 

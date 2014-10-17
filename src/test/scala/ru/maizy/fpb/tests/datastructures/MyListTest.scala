@@ -34,6 +34,9 @@ class MyListTest extends FunSuite with Matchers {
     assert(MyList.dropWhile(simpleList, (_: Char) => false) === simpleList)
     assert(MyList.dropWhile(simpleList, (x: Char) => x != 'b') === MyList('b', 'c'))
     assert(MyList.dropWhile(MyNil, (x: Char) => x != 'b') === MyNil)
+
+    val bookExample = MyList(1,2,3,4,5)
+    assert(MyList.dropWhile(bookExample, (x: Int) => x < 4) === MyList(4, 5))
   }
 
   test("init") {
@@ -42,5 +45,10 @@ class MyListTest extends FunSuite with Matchers {
     intercept[Exception] {
       MyList.init(MyNil)
     }
+  }
+
+  test("length") {
+    assert(MyList.length(simpleList) === 3)
+    assert(MyList.length(MyNil) === 0)
   }
 }
