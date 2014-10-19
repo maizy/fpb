@@ -11,6 +11,8 @@ class MyListTest extends FunSuite with Matchers {
   import ru.maizy.fpb.datastructures._
 
   val simpleList = MyList('a', 'b', 'c')
+  val simpleListInt = MyList(1, 2, 3, 4)
+  val simpleListDouble = MyList(1.0, 2.0, 3.0, 4.0)
 
   test("tail") {
     assert(MyList.tail(simpleList) === MyList('b', 'c'))
@@ -53,8 +55,8 @@ class MyListTest extends FunSuite with Matchers {
   }
 
   test("foldLeft, foldRight in terms of foldleft") {
-    assert(MyList.foldLeft(MyList(1, 2, 3, 4), 0)(_ + _) === 10)
-    assert(MyList.foldLeft(MyList(1, 2, 3, 4), 1)(_ * _) === 24)
+    assert(MyList.foldLeft(simpleListInt, 0)(_ + _) === 10)
+    assert(MyList.foldLeft(simpleListInt, 1)(_ * _) === 24)
     assert(MyList.foldLeft(simpleList, "")(_ + _) === "abc")
 
     // for func like produce and sum foldRight eq foldLeft (fold left better)
@@ -69,5 +71,11 @@ class MyListTest extends FunSuite with Matchers {
 
     // for right associative func not
     assert(List("a","b","c").foldRight("")(_ + _) !== List("a","b","c").reverse.foldLeft("")(_ + _))
+  }
+
+  test("foldLeft based funcs") {
+    assert(MyList.lenght3(simpleList) === 3)
+    assert(MyList.sum3(simpleListInt) === MyList.sum(simpleListInt))
+    assert(MyList.product3(simpleListDouble) === MyList.product(simpleListDouble))
   }
 }

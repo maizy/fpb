@@ -110,6 +110,14 @@ object MyList {
     recursive(list, init)
   }
 
+  def sum3(list: MyList[Int]) =
+    foldLeft(list, 0)(_ + _)
+
+  def product3(list: MyList[Double]) =
+    foldLeft(list, 1.0)(_ * _)
+  
+  def lenght3[A](list: MyList[A]) =
+    foldLeft(list, 0)((acc, _) => acc + 1)
 
   def map[A,B](l: MyList[A])(f: A => B): MyList[B] = sys.error("todo")
 }
