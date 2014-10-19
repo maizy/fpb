@@ -95,10 +95,21 @@ object MyList {
     foldRight(ns, 1.0)(_ * _)
 
 
-  def length[A](l: MyList[A]): Int =
-    foldRight(l, 0)((_, acc) => acc + 1)
+  def length[A](list: MyList[A]): Int =
+    foldRight(list, 0)((_, acc) => acc + 1)
 
-  def foldLeft[A,B](l: MyList[A], z: B)(f: (B, A) => B): B = sys.error("todo")
+  def foldLeft[A,B](list: MyList[A], init: B)(f: (B, A) => B): B = {
+
+    @annotation.tailrec
+    def recursive(xs: MyList[A], acc: B): B =
+      xs match {
+        case MyNil => acc
+        case MyCons(x, tail) => recursive(tail, f(acc, x))
+      }
+
+    recursive(list, init)
+  }
+
 
   def map[A,B](l: MyList[A])(f: A => B): MyList[B] = sys.error("todo")
 }

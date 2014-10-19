@@ -51,4 +51,23 @@ class MyListTest extends FunSuite with Matchers {
     assert(MyList.length(simpleList) === 3)
     assert(MyList.length(MyNil) === 0)
   }
+
+  test("foldLeft, foldRight in terms of foldleft") {
+    assert(MyList.foldLeft(MyList(1, 2, 3, 4), 0)(_ + _) === 10)
+    assert(MyList.foldLeft(MyList(1, 2, 3, 4), 1)(_ * _) === 24)
+    assert(MyList.foldLeft(simpleList, "")(_ + _) === "abc")
+
+    // for func like produce and sum foldRight eq foldLeft (fold left better)
+    assert(MyList.foldLeft(simpleList, 0)(_ + _) === MyList.foldRight(simpleList, 0)(_ + _))
+    assert(MyList.foldLeft(simpleList, 1)(_ * _) === MyList.foldRight(simpleList, 1)(_ * _))
+
+    // but ...
+    assert(MyList.foldLeft(simpleList, 10)(_ - _) !== MyList.foldRight(simpleList, 10)(_ - _))
+
+    // for left assotiative func it's equivalent for foldRight
+    assert(List(1,2,3).foldRight(10)(_ - _) !== List(1,2,3).reverse.foldLeft(10)(_ - _))
+
+    // for right associative func not
+    assert(List("a","b","c").foldRight("")(_ + _) !== List("a","b","c").reverse.foldLeft("")(_ + _))
+  }
 }
