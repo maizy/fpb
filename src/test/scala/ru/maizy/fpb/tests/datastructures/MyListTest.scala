@@ -58,24 +58,44 @@ class MyListTest extends FunSuite with Matchers {
     assert(MyList.foldLeft(simpleListInt, 0)(_ + _) === 10)
     assert(MyList.foldLeft(simpleListInt, 1)(_ * _) === 24)
     assert(MyList.foldLeft(simpleList, "")(_ + _) === "abc")
+  }
 
-    // for func like produce and sum foldRight eq foldLeft (fold left better)
+  test("foldLeft, foldRight in terms of one another") {
+    // for func like produce and sum foldRight eq foldLeft (fold left better solutions for that)
     assert(MyList.foldLeft(simpleList, 0)(_ + _) === MyList.foldRight(simpleList, 0)(_ + _))
     assert(MyList.foldLeft(simpleList, 1)(_ * _) === MyList.foldRight(simpleList, 1)(_ * _))
 
-    // but ...
-    assert(MyList.foldLeft(simpleList, 10)(_ - _) !== MyList.foldRight(simpleList, 10)(_ - _))
+    //in general that trick works (• - some operator)
+    //    foldRight
+    //    (A1 • (A2 • (A3 • (... (An • Z)...)))
+    //
+    //
+    //    foldLeft + reverser
+    //    (...(((Z • An) • An-1) ... • A1)
+    //    but Z • An not the same as (An - Z)
+    //    + swap args
+    //    (...(A1 • (An-1 • (An • Z)))
+    // but B == A in that case
 
-    // for left assotiative func it's equivalent for foldRight
-    assert(List(1,2,3).foldRight(10)(_ - _) !== List(1,2,3).reverse.foldLeft(10)(_ - _))
+    assert(
+      MyList.foldRight(simpleListInt, 10)(_ - _)
+      ===
+      MyList.foldLeft(MyList.reverse(simpleListInt), 10)((acc: Int, x: Int) => x - acc)
+    )
 
-    // for right associative func not
-    assert(List("a","b","c").foldRight("")(_ + _) !== List("a","b","c").reverse.foldLeft("")(_ + _))
+    //there is another not stack-safe implementation in answers, when you build stack of funcs
+    // and the call them with init value
+    // f(f(f()...)))(z)
   }
 
   test("foldLeft based funcs") {
     assert(MyList.lenght3(simpleList) === 3)
     assert(MyList.sum3(simpleListInt) === MyList.sum(simpleListInt))
     assert(MyList.product3(simpleListDouble) === MyList.product(simpleListDouble))
+  }
+
+  test("reverse") {
+    assert(MyList.reverse(simpleList) === MyList('c', 'b', 'a'))
+    assert(MyList.reverse(MyNil) === MyNil)
   }
 }

@@ -110,14 +110,17 @@ object MyList {
     recursive(list, init)
   }
 
-  def sum3(list: MyList[Int]) =
+  def sum3(list: MyList[Int]): Int =
     foldLeft(list, 0)(_ + _)
 
-  def product3(list: MyList[Double]) =
+  def product3(list: MyList[Double]): Double =
     foldLeft(list, 1.0)(_ * _)
   
-  def lenght3[A](list: MyList[A]) =
+  def lenght3[A](list: MyList[A]): Int =
     foldLeft(list, 0)((acc, _) => acc + 1)
+
+  def reverse[A](list: MyList[A]): MyList[A] =
+    foldLeft(list, MyNil: MyList[A])((acc: MyList[A], x: A) => MyCons(x, acc))  //N.B implicit type of MyNil
 
   def map[A,B](l: MyList[A])(f: A => B): MyList[B] = sys.error("todo")
 }
