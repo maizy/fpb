@@ -121,4 +121,7 @@ object MyList {
     foldLeft(list, MyNil: MyList[A])((acc: MyList[A], x: A) => MyCons(x, acc))  //N.B implicit type of MyNil
 
   def map[A,B](l: MyList[A])(f: A => B): MyList[B] = sys.error("todo")
+
+  def flatten[A](l: MyList[MyList[A]]): MyList[A] =
+    foldLeft(l, MyNil: MyList[A])((acc, lst) => append2(acc, lst))
 }

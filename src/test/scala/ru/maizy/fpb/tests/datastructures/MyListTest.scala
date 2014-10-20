@@ -102,4 +102,30 @@ class MyListTest extends FunSuite with Matchers {
   test("append 2") {
     assert(MyList.append(simpleList, MyList('x', 'y', 'z')) === MyList('a', 'b', 'c', 'x', 'y', 'z'))
   }
+
+  test("flatten") {
+    assert(
+      MyList.flatten(
+        MyList(
+          MyList('a', 'b'),
+          MyNil,
+          MyList('c'),
+          MyNil
+        )
+      )
+      ===
+      MyList('a', 'b', 'c')
+    )
+
+    assert(
+      MyList.flatten(
+        MyList(
+          MyNil,
+          MyNil
+        )
+      )
+      ===
+      MyNil
+    )
+  }
 }
