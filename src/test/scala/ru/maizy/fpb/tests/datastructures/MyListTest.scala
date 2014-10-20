@@ -85,7 +85,7 @@ class MyListTest extends FunSuite with Matchers {
 
     //there is another not stack-safe implementation in answers, when you build stack of funcs
     // and the call them with init value
-    // f(f(f()...)))(z)
+    // (f() => f() => f())(z)
   }
 
   test("foldLeft based funcs") {
@@ -97,5 +97,9 @@ class MyListTest extends FunSuite with Matchers {
   test("reverse") {
     assert(MyList.reverse(simpleList) === MyList('c', 'b', 'a'))
     assert(MyList.reverse(MyNil) === MyNil)
+  }
+
+  test("append 2") {
+    assert(MyList.append(simpleList, MyList('x', 'y', 'z')) === MyList('a', 'b', 'c', 'x', 'y', 'z'))
   }
 }

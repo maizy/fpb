@@ -37,6 +37,9 @@ object MyList {
       case MyCons(h,t) => MyCons(h, append(t, a2))
     }
 
+  def append2[A](a1: MyList[A], a2: MyList[A]): MyList[A] =
+    foldLeft(reverse(a1), a2)((acc, x) => MyCons(x, acc))
+
   def tail[A](l: MyList[A]): MyList[A] =
     l match {
       case MyNil => throw new Exception("List is empty")
@@ -98,17 +101,12 @@ object MyList {
   def length[A](list: MyList[A]): Int =
     foldRight(list, 0)((_, acc) => acc + 1)
 
-  def foldLeft[A,B](list: MyList[A], init: B)(f: (B, A) => B): B = {
-
-    @annotation.tailrec
-    def recursive(xs: MyList[A], acc: B): B =
-      xs match {
-        case MyNil => acc
-        case MyCons(x, tail) => recursive(tail, f(acc, x))
-      }
-
-    recursive(list, init)
-  }
+  @annotation.tailrec
+  def foldLeft[A,B](list: MyList[A], z: B)(f: (B, A) => B): B =
+    list match {
+      case MyNil => z
+      case MyCons(x, tail) => foldLeft(tail, f(z, x))(f)
+    }
 
   def sum3(list: MyList[Int]): Int =
     foldLeft(list, 0)(_ + _)
