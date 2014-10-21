@@ -104,28 +104,50 @@ class MyListTest extends FunSuite with Matchers {
   }
 
   test("flatten") {
+    val data1 = MyList(
+      MyList('a', 'b'),
+      MyNil,
+      MyList('c'),
+      MyNil
+    )
+    val expected1 = MyList('a', 'b', 'c')
     assert(
-      MyList.flatten(
-        MyList(
-          MyList('a', 'b'),
-          MyNil,
-          MyList('c'),
-          MyNil
-        )
+      MyList.flattenStackSafe(
+        data1
       )
       ===
-      MyList('a', 'b', 'c')
+      expected1
     )
 
     assert(
-      MyList.flatten(
-        MyList(
-          MyNil,
-          MyNil
-        )
+      MyList.flattenLinear(
+        data1
+      )
+      ===
+      expected1
+    )
+
+    val data2 = MyList(
+      MyNil,
+      MyNil
+    )
+    assert(
+      MyList.flattenStackSafe(
+        data2
       )
       ===
       MyNil
     )
+    assert(
+      MyList.flattenLinear(
+        data2
+      )
+      ===
+      MyNil
+    )
+  }
+
+  test("addOne") {
+    assert(MyList.addOne(simpleListInt) === MyList(2, 3, 4, 5))
   }
 }

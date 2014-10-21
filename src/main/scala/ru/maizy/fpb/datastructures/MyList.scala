@@ -122,6 +122,12 @@ object MyList {
 
   def map[A,B](l: MyList[A])(f: A => B): MyList[B] = sys.error("todo")
 
-  def flatten[A](l: MyList[MyList[A]]): MyList[A] =
+  def flattenStackSafe[A](l: MyList[MyList[A]]): MyList[A] =
     foldLeft(l, MyNil: MyList[A])((acc, lst) => append2(acc, lst))
+
+  def flattenLinear[A](l: MyList[MyList[A]]): MyList[A] =
+    foldRight(l, MyNil: MyList[A])(append)
+
+  def addOne(list: MyList[Int]) =
+    foldLeft(reverse(list), MyNil: MyList[Int])((acc, x) => MyCons(x + 1, acc))
 }
