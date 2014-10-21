@@ -128,6 +128,4 @@ object MyList {
   def flattenLinear[A](l: MyList[MyList[A]]): MyList[A] =
     foldRight(l, MyNil: MyList[A])(append)
 
-  def addOne(list: MyList[Int]) =
-    foldLeft(reverse(list), MyNil: MyList[Int])((acc, x) => MyCons(x + 1, acc))
 }

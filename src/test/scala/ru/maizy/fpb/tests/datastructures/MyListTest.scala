@@ -146,8 +146,4 @@ class MyListTest extends FunSuite with Matchers {
       MyNil
     )
   }
-
-  test("addOne") {
-    assert(MyList.addOne(simpleListInt) === MyList(2, 3, 4, 5))
-  }
 }
