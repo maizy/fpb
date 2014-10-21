@@ -120,7 +120,8 @@ object MyList {
   def reverse[A](list: MyList[A]): MyList[A] =
     foldLeft(list, MyNil: MyList[A])((acc: MyList[A], x: A) => MyCons(x, acc))  //N.B implicit type of MyNil
 
-  def map[A,B](l: MyList[A])(f: A => B): MyList[B] = sys.error("todo")
+  def map[A,B](l: MyList[A])(f: A => B): MyList[B] =
+    foldRight(l, MyNil: MyList[B])((x, acc) => MyCons(f(x), acc))
 
   def flattenStackSafe[A](l: MyList[MyList[A]]): MyList[A] =
     foldLeft(l, MyNil: MyList[A])((acc, lst) => append2(acc, lst))
