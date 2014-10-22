@@ -154,4 +154,8 @@ class MyListTest extends FunSuite with Matchers {
   test("filter") {
     assert(MyList.filter(simpleListInt)(_ % 2 == 0) === MyList(2, 4))
   }
+
+  test("flatMap") {
+    assert(MyList.flatMap(simpleListInt)(i => MyList(i, i)) === MyList(1, 1, 2, 2, 3, 3, 4, 4))
+  }
 }

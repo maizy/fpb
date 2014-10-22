@@ -132,4 +132,7 @@ object MyList {
   def filter[A](as: MyList[A])(f: A => Boolean): MyList[A] =
     foldRight(as, MyNil: MyList[A])((x, acc) => if (f(x)) MyCons(x, acc) else acc)
 
+  def flatMap[A,B](as: MyList[A])(f: A => MyList[B]): MyList[B] =
+    flattenLinear(map(as)(f))
+
 }
