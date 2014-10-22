@@ -12,4 +12,18 @@ package object datastructures {
 
   def doubleToString(list: MyList[Double]): MyList[String] =
     foldRight(list, MyNil: MyList[String])((x, acc) => MyCons(x.toString, acc))
+
+  def zipTwoIntLists(l: MyList[Int], l2: MyList[Int]): MyList[Int] = {
+    @annotation.tailrec
+    def recursive(xs: MyList[Int], xs2: MyList[Int], acc: MyList[Int]): MyList[Int] =
+      xs match {
+        case MyNil => acc
+        case MyCons(head, tail) =>
+          xs2 match {
+            case MyNil => acc
+            case MyCons(head2, tail2) => recursive(tail, tail2, MyCons(head + head2, acc))
+          }
+      }
+    MyList.reverse(recursive(l, l2, MyNil))
+  }
 }

@@ -21,4 +21,8 @@ class PackageTest extends FunSuite with Matchers {
   test("double to string") {
     assert(doubleToString(simpleListDouble) === MyList("1.0", "2.0", "3.0", "4.0"))
   }
+
+  test("zipTwoIntLists") {
+    assert(zipTwoIntLists(simpleListInt, MyList(3, 4)) === MyList(4, 6))
+  }
 }
