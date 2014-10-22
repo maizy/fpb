@@ -24,5 +24,6 @@ class PackageTest extends FunSuite with Matchers {
 
   test("zipTwoIntLists") {
     assert(zipTwoIntLists(simpleListInt, MyList(3, 4)) === MyList(4, 6))
+    assert(zipTwoIntLists(simpleListInt, MyList(3, 4)) === zipTwoIntListsNonStackSafe(simpleListInt, MyList(3, 4)))
   }
 }

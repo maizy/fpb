@@ -26,4 +26,11 @@ package object datastructures {
       }
     MyList.reverse(recursive(l, l2, MyNil))
   }
+
+  def zipTwoIntListsNonStackSafe(l: MyList[Int], l2: MyList[Int]): MyList[Int] =
+    (l, l2) match {
+      case (MyNil, _) | (_, MyNil) => MyNil
+      case (MyCons(head, tail), MyCons(head2, tail2)) => MyCons(head + head2, zipTwoIntListsNonStackSafe(tail, tail2))
+    }
+
 }
