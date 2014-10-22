@@ -167,4 +167,13 @@ class MyListTest extends FunSuite with Matchers {
       MyList("0:1.0", "1:2.0", "2:3.0", "3:4.0")
     )
   }
+
+  test("hasSubsequence") {
+    assert(MyList.hasSubsequence(simpleListInt, MyList(1, 2)))
+    assert(MyList.hasSubsequence(simpleListInt, simpleListInt))
+    assert(!MyList.hasSubsequence(simpleListInt, MyList(5)))
+    assert(!MyList.hasSubsequence(simpleListInt, MyList(2, 1)))
+    assert(MyList.hasSubsequence(simpleListInt, MyNil))
+    assert(!MyList.hasSubsequence(simpleListInt, MyList(3, 4, 5)))
+  }
 }

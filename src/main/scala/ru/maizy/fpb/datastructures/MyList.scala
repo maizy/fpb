@@ -148,4 +148,14 @@ object MyList {
       }
     MyList.reverse(recursive(l, l2, MyNil))
   }
+
+  @annotation.tailrec
+  def hasSubsequence[A](list: MyList[A], sub: MyList[A]): Boolean =
+    (list, sub) match {
+      case (_, MyNil) => true
+      case (MyNil, MyCons(_, _)) => false
+      case (MyCons(lh, lt), MyCons(sh, st)) =>
+        if (lh == sh) hasSubsequence(lt, st)
+        else hasSubsequence(lt, sub)
+    }
 }
