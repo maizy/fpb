@@ -89,9 +89,9 @@ class MyListTest extends FunSuite with Matchers {
   }
 
   test("foldLeft based funcs") {
-    assert(MyList.lenght3(simpleList) === 3)
-    assert(MyList.sum3(simpleListInt) === MyList.sum(simpleListInt))
-    assert(MyList.product3(simpleListDouble) === MyList.product(simpleListDouble))
+    assert(MyList.lenghtViaFoldLeft(simpleList) === 3)
+    assert(MyList.sumViaFoldLeft(simpleListInt) === MyList.sum(simpleListInt))
+    assert(MyList.productViaFoldLeft(simpleListDouble) === MyList.product(simpleListDouble))
   }
 
   test("reverse") {
@@ -153,6 +153,7 @@ class MyListTest extends FunSuite with Matchers {
 
   test("filter") {
     assert(MyList.filter(simpleListInt)(_ % 2 == 0) === MyList(2, 4))
+    assert(MyList.filterViaFlatMap(simpleListInt)(_ % 2 == 0) === MyList.filter(simpleListInt)(_ % 2 == 0))
   }
 
   test("flatMap") {

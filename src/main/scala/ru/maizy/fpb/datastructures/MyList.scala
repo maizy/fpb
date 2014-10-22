@@ -37,7 +37,7 @@ object MyList {
       case MyCons(h,t) => MyCons(h, append(t, a2))
     }
 
-  def append2[A](a1: MyList[A], a2: MyList[A]): MyList[A] =
+  def appendViaFoldLeft[A](a1: MyList[A], a2: MyList[A]): MyList[A] =
     foldLeft(reverse(a1), a2)((acc, x) => MyCons(x, acc))
 
   def tail[A](l: MyList[A]): MyList[A] =
@@ -91,10 +91,10 @@ object MyList {
       case MyCons(x, xs) => f(x, foldRight(xs, z)(f))
     }
 
-  def sum2(ns: MyList[Int]) =
+  def sumViaFoldRight(ns: MyList[Int]) =
     foldRight(ns, 0)((x,y) => x + y)
 
-  def product2(ns: MyList[Double]) =
+  def productViaFoldRight(ns: MyList[Double]) =
     foldRight(ns, 1.0)(_ * _)
 
 
@@ -108,13 +108,13 @@ object MyList {
       case MyCons(x, tail) => foldLeft(tail, f(z, x))(f)
     }
 
-  def sum3(list: MyList[Int]): Int =
+  def sumViaFoldLeft(list: MyList[Int]): Int =
     foldLeft(list, 0)(_ + _)
 
-  def product3(list: MyList[Double]): Double =
+  def productViaFoldLeft(list: MyList[Double]): Double =
     foldLeft(list, 1.0)(_ * _)
   
-  def lenght3[A](list: MyList[A]): Int =
+  def lenghtViaFoldLeft[A](list: MyList[A]): Int =
     foldLeft(list, 0)((acc, _) => acc + 1)
 
   def reverse[A](list: MyList[A]): MyList[A] =
@@ -124,7 +124,7 @@ object MyList {
     foldRight(l, MyNil: MyList[B])((x, acc) => MyCons(f(x), acc))
 
   def flattenStackSafe[A](l: MyList[MyList[A]]): MyList[A] =
-    foldLeft(l, MyNil: MyList[A])((acc, lst) => append2(acc, lst))
+    foldLeft(l, MyNil: MyList[A])((acc, lst) => appendViaFoldLeft(acc, lst))
 
   def flattenLinear[A](l: MyList[MyList[A]]): MyList[A] =
     foldRight(l, MyNil: MyList[A])(append)
@@ -134,5 +134,7 @@ object MyList {
 
   def flatMap[A,B](as: MyList[A])(f: A => MyList[B]): MyList[B] =
     flattenLinear(map(as)(f))
-
+  
+  def filterViaFlatMap[A](as: MyList[A])(f: A => Boolean): MyList[A] =
+    flatMap(as)(x => if(f(x)) MyList(x) else MyNil)
 }
