@@ -159,4 +159,12 @@ class MyListTest extends FunSuite with Matchers {
   test("flatMap") {
     assert(MyList.flatMap(simpleListInt)(i => MyList(i, i)) === MyList(1, 1, 2, 2, 3, 3, 4, 4))
   }
+
+  test("zipWith") {
+    assert(
+      MyList.zipWith(MyCons(0, simpleListInt), simpleListDouble)((x: Int, y: Double) => x.toString + ":" + y.toString)
+      ===
+      MyList("0:1.0", "1:2.0", "2:3.0", "3:4.0")
+    )
+  }
 }

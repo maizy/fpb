@@ -137,4 +137,15 @@ object MyList {
   
   def filterViaFlatMap[A](as: MyList[A])(f: A => Boolean): MyList[A] =
     flatMap(as)(x => if(f(x)) MyList(x) else MyNil)
+
+  def zipWith[A, B, C](l: MyList[A], l2: MyList[B])(f: (A, B) => C): MyList[C] = {
+    @annotation.tailrec
+    def recursive(xs: MyList[A], xs2: MyList[B], acc: MyList[C]): MyList[C] =
+      (xs, xs2) match {
+        case (MyNil, _) | (_, MyNil) => acc
+        case (MyCons(head, tail), MyCons(head2, tail2)) =>
+          recursive(tail, tail2, MyCons(f(head, head2), acc))
+      }
+    MyList.reverse(recursive(l, l2, MyNil))
+  }
 }
